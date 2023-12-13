@@ -1,0 +1,76 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring_project.model.orders.OrdersMapper">
+    <select id="getMemberDTOById" parameterType="String" resultType="com.spring_project.model.member.MemberDTO">
+        select *
+        from member
+        where id = #{id}
+    </select>
+
+    <select id="getContentsDTOByContentsno" parameterType="int"
+            resultType="com.spring_project.model.contents.ContentsDTO">
+        select contentsno, cateno,subcateno, pname, price, filename, stock, rdate,
+               detail, gradepoint
+        from contents
+        where contentsno = #{contentsno}
+    </select>
+
+    <insert id="saveOrdersDTO" parameterType="com.spring_project.model.orders.OrdersDTO">
+        INSERT INTO orders(id, tname ,mname, odate, total, payment, reqtext,tel,zipcode,address1,address2 )
+        VALUES(#{id},#{tname}, #{mname}, sysdate(), #{total}, #{payment}, #{reqtext},#{tel},#{zipcode},#{address1},#{address2})
+
+    </insert>
+
+    <insert id="saveOrdersdetailDTO" parameterType="com.spring_project.model.orders.OrdersdetailDTO">
+        insert into order_detail(
+            orderno,  contentsno,  quantity,  pname, size)
+        values(#{orderno},#{contentsno},#{quantity},#{pname},#{size})
+    </insert>
+
+    <update id="updateStock" parameterType="Map">
+        update contents
+        set stock = stock - #{quantity}
+        where contentsno = #{contentsno};
+    </update>
+
+    <select id="getLastOrderId" resultType="int">
+        SELECT LAST_INSERT_ID()
+    </select>
+
+    <select id="getOrdersDTO" parameterType="int" resultType="com.spring_project.model.orders.OrdersDTO">
+        select * from orders where orderno = #{orderno};
+    </select>
+
+
+    <insert id="saveCartDTO" parameterType="com.spring_project.model.orders.CartDTO">
+        insert into cart(
+            id , contentsno, quantity,   pname, size , price, filename)
+        values(#{id},#{contentsno},#{quantity},#{pname}, #{size},#{price},#{filename} );
+    </insert>
+
+    <select id="getCartDTO" parameterType="String" resultType="com.spring_project.model.orders.CartDTO">
+        SELECT *
+        FROM cart
+        where id = #{id}
+    </select>
+
+    <delete id="deleteOrdersDTO" parameterType="int">
+        delete from cart
+        where cartno = #{cartno};
+    </delete>
+
+    <select id="getOrdersdetailDTOByCartno" parameterType="int" resultType="com.spring_project.model.orders.OrdersdetailDTO">
+    SELECT contentsno, quantity, pname, size
+    FROM cart
+    where cartno = #{cartno}
+    </select>
+
+    <select id="getCount" parameterType="String" resultType="Int">
+        SELECT count(*)
+        FROM cart
+        where id = #{id};
+    </select>
+
+</mapper>

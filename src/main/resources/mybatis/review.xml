@@ -1,0 +1,52 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring_project.model.review.ReviewMapper">
+
+<!--    <select id="read" parameterType="int"-->
+<!--            resultType="com.spring_project.model.review.ReviewDTO">-->
+<!--        select rnum, contentsno,title ,content, regdate, id, gradepoint, ordersize-->
+<!--        from review-->
+<!--        where contentsno = #{contentsno}-->
+<!--    </select>-->
+
+    <select id="list" parameterType="Map"
+                resultType="com.spring_project.model.review.ReviewDTO">
+            select rnum, contentsno,title ,content, regdate, id, gradepoint, ordersize
+            from review
+            where contentsno = #{contentsno}
+    </select>
+
+    <select id="totalCnt" parameterType="int"
+            resultType="int">
+        select count(*) from review
+        where contentsno = #{contentsno};
+    </select>
+
+    <insert id="create" parameterType="com.spring_project.model.review.ReviewDTO">
+        INSERT INTO review(title, content ,regdate, id, gradepoint, contentsno, ordersize)
+        VALUES(#{title}, #{content}, sysdate() , #{id}, #{gradepoint}, #{contentsno},#{ordersize})
+    </insert>
+
+
+    <update id="updateAvg" parameterType="int">
+        update contents
+        set gradepoint = (select IFNULL(avg(gradepoint), 0) from review where contentsno= #{contentsno})
+        where  contentsno = #{contentsno}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from review
+        where rnum = #{rnum}
+    </delete>
+
+    <update id="update" parameterType="com.spring_project.model.review.ReviewDTO">
+        update review
+        set title = #{title},
+            content = #{content},
+            gradepoint = #{gradepoint},
+            ordersize = #{ordersize}
+        where rnum = #{rnum}
+    </update>
+</mapper>
