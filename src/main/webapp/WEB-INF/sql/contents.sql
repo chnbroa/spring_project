@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `project2`.`contents` (
 );
 
 
-
+drop table contents;
 
 insert into contents(cateno, pname, price, filename, detail, rdate, stock)
 values(1, 'Ripped Skinny Jeans', 
