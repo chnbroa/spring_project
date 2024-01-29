@@ -11,8 +11,8 @@ public class UploadMem {
             System.out.println("Windows 10: " + path);
             
         } else {
-            // System.out.println("Linux");
-            path = "/home/ubuntu/deploy/project2/member/storage/";
+             System.out.println("Linux");
+            path = "/home/ubuntu/deploy/member/storage/";
         }
         
         return path;

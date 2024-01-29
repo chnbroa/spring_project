@@ -12,8 +12,8 @@ public class UploadCon {
             System.out.println("Windows 10: " + path);
             
         } else {
-            // System.out.println("Linux");
-            path = "/home/ubuntu/deploy/project2/contents/storage/";
+            System.out.println("Linux");
+            path = "/home/ubuntu/deploy/contents/storage/";
         }
         
         return path;

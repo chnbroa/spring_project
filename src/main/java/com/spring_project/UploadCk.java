@@ -13,8 +13,8 @@ public class UploadCk {
             System.out.println("Windows 10: " + path);
             
         } else {
-            // System.out.println("Linux");
-            path = "/home/ubuntu/deploy/project2/contents/ckstorage/";
+             System.out.println("Linux");
+            path = "/home/ubuntu/deploy/contents/ckstorage/";
         }
         
         return path;
